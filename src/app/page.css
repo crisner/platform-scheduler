@@ -207,6 +207,8 @@
   justify-content: space-between;
   background-color: var(--white);
   border-radius: var(--border-radius);
+  margin-bottom: 0.5rem;
+  box-shadow: 0 1px 2px var(--neutral-light);
 }
 
 .train-item.train-waiting {

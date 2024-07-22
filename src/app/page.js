@@ -5,6 +5,7 @@ import RightArrow from "../../public/assets/right-arrow.svg";
 import "@/app/page.css";
 import styles from "./page.module.css";
 import PlatformItem from "@/components/PlatformItem";
+import TrainItem from "@/components/TrainItem";
 
 export default function Dashboard() {
   return (
@@ -35,39 +36,17 @@ export default function Dashboard() {
         <div className="waiting-trains">
           <h3>Waiting</h3>
           <div className="trains-container">
-            <div className="train-item train-waiting">
-              <div>
-                <TrainIcon />
-                220128
-              </div>
-              <div>
-                <div className="train-timings">
-                  <span>08:15</span>
-                  <RightArrow />
-                  <span>08:25</span>
-                </div>
-                <button className="btn btn-danger">Delay</button>
-              </div>
-            </div>
+            <TrainItem status="waiting" trainID={'987654'} trainArrival={'8:30'} trainDeparture={'8:35'} />
+            <TrainItem status="waiting" trainID={'987654'} trainArrival={'8:30'} trainDeparture={'8:35'} />
+            <TrainItem status="waiting" trainID={'987654'} trainArrival={'8:30'} trainDeparture={'8:35'} />
           </div>
         </div>
         <div className="upcoming-trains">
           <h3>Upcoming</h3>
           <div className="trains-container">
-            <div className="train-item train-upcoming">
-              <div>
-                <TrainIcon />
-                220128
-              </div>
-              <div>
-                <div className="train-timings">
-                  <span>08:15</span>
-                  <RightArrow />
-                  <span>08:25</span>
-                </div>
-                <button className="btn btn-danger">Delay</button>
-              </div>
-            </div>
+          <TrainItem status="upcoming" trainID={'987654'} trainArrival={'8:30'} trainDeparture={'8:35'} />
+          <TrainItem status="upcoming" trainID={'987654'} trainArrival={'8:30'} trainDeparture={'8:35'} />
+          <TrainItem status="upcoming" trainID={'987654'} trainArrival={'8:30'} trainDeparture={'8:35'} />
           </div>
         </div>
       </div>
