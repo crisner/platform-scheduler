@@ -1,7 +1,4 @@
 "use client";
-
-import TrainIcon from "../../public/assets/train.svg";
-import RightArrow from "../../public/assets/right-arrow.svg";
 import "@/app/page.css";
 import styles from "./page.module.css";
 import PlatformItem from "@/components/PlatformItem";
