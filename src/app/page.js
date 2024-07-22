@@ -4,6 +4,7 @@ import TrainIcon from "../../public/assets/train.svg";
 import RightArrow from "../../public/assets/right-arrow.svg";
 import "@/app/page.css";
 import styles from "./page.module.css";
+import PlatformItem from "@/components/PlatformItem";
 
 export default function Dashboard() {
   return (
@@ -25,27 +26,50 @@ export default function Dashboard() {
             <div className="train">220128 - P01 - 08:25</div>
           </div>
           <div className="platforms">
-            <div className="platform platform-occupied">
-              <div className="platform-number">01</div>
-              <div className="train-info">
-                <div className="main-info">
-                  <div>
-                    <TrainIcon />
-                    220128
-                  </div>
-                  <div>
-                    <span>08:15</span>
-                    <RightArrow />
-                    <span>08:25</span>
-                  </div>
+            <PlatformItem platformID="01" />
+            <PlatformItem platformID="02" trainID={'987654'} trainArrival={'8:30'} trainDeparture={'8:35'} status='CURR' />
+            <PlatformItem platformID="02" trainID={'987654'} trainArrival={'8:30'} trainDeparture={'8:35'} status='ARR' />
+            <PlatformItem platformID="02" trainID={'987654'} trainArrival={'8:30'} trainDeparture={'8:35'} status='DEP' />
+          </div>
+        </div>
+        <div className="waiting-trains">
+          <h3>Waiting</h3>
+          <div className="trains-container">
+            <div className="train-item train-waiting">
+              <div>
+                <TrainIcon />
+                220128
+              </div>
+              <div>
+                <div className="train-timings">
+                  <span>08:15</span>
+                  <RightArrow />
+                  <span>08:25</span>
                 </div>
-                <div className="sub-info"></div>
+                <button className="btn btn-danger">Delay</button>
               </div>
             </div>
           </div>
         </div>
-        <div className="waiting-trains">2</div>
-        <div className="upcoming-trains">3</div>
+        <div className="upcoming-trains">
+          <h3>Upcoming</h3>
+          <div className="trains-container">
+            <div className="train-item train-upcoming">
+              <div>
+                <TrainIcon />
+                220128
+              </div>
+              <div>
+                <div className="train-timings">
+                  <span>08:15</span>
+                  <RightArrow />
+                  <span>08:25</span>
+                </div>
+                <button className="btn btn-danger">Delay</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   );
