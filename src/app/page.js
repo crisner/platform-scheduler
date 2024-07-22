@@ -3,6 +3,8 @@ import "@/app/page.css";
 import styles from "./page.module.css";
 import PlatformItem from "@/components/PlatformItem";
 import TrainItem from "@/components/TrainItem";
+import Upload from "@/components/Upload";
+import GenerateReport from "@/components/GenerateReport";
 
 export default function Dashboard() {
   return (
@@ -14,8 +16,10 @@ export default function Dashboard() {
           <div>No. of platforms: 8</div>
         </section>
         <div className="action-btns">
-          <button className="btn btn-primary">Upload schedule</button>
-          <button className="btn btn-primary">Generate Report</button>
+          {/* <button className="btn btn-primary">Upload schedule</button> */}
+          <Upload />
+          {/* <button className="btn btn-primary">Generate Report</button> */}
+          <GenerateReport />
         </div>
       </div>
       <div className="content-container">

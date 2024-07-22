@@ -33,6 +33,35 @@ a {
   text-decoration: none;
 }
 
+.btn {
+  padding: 12px;
+  border-radius: var(--border-radius);
+  border: transparent;
+  cursor: pointer;
+  letter-spacing: 0.6px;
+}
+
+.btn.btn-primary,
+.btn.btn-danger {
+  color: var(--white);
+}
+
+.btn.btn-primary {
+  background-color: rgb(var(--primary));
+}
+
+.btn.btn-danger {
+  background-color: rgb(var(--danger));
+}
+
+.btn.btn-primary:hover {
+  background-color: rgba(var(--primary), 0.93);
+}
+
+.btn.btn-danger:hover {
+  background-color: rgba(var(--danger), 0.93);
+}
+
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
