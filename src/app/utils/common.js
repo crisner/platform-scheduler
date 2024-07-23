@@ -46,3 +46,29 @@
 // TODO: Create a function to allocateTrains
 // TODO: Create a function to upload CSV train schedule and store it in browser storage
 // TODO: Create a function to generate report between a set timeframe
+
+
+
+// if(train.id == '100015') {
+//     console.log(train.id, 'arrivalHours', 'currentHours');
+//     console.log(arrivalHours, currentHours);
+//     console.log('arrivalMinutes', 'currentMinutes');
+//     console.log(arrivalMinutes, currentMinutes);
+//     console.log('condition', (arrivalHours == currentHours &&
+//       arrivalMinutes <= currentMinutes) ||
+//       arrivalHours < currentHours);
+//     console.log(train.id, 'departureHours', 'currentHours');
+//     console.log(departureHours, currentHours);
+//     console.log('departureMinutes', 'currentMinutes');
+//     console.log(departureMinutes, currentMinutes);
+//     console.log('condition', (departureHours == currentHours &&
+//       departureMinutes > currentMinutes) ||
+//       departureHours > currentHours);
+//       console.log('total condition', ((arrivalHours == currentHours &&
+//         arrivalMinutes <= currentMinutes) ||
+//         arrivalHours < currentHours) 
+//         &&
+//       ((departureHours == currentHours &&
+//         departureMinutes > currentMinutes) ||
+//         departureHours > currentHours));
+//   }

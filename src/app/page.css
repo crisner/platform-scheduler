@@ -20,7 +20,7 @@
 
 /* ======= PLATFORMS ======== */
 .content-container {
-  height: calc(100dvh - 158px);
+  height: calc(100dvh - 163px);
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: auto;
