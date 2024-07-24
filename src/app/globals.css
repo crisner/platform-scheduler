@@ -33,6 +33,19 @@ a {
   text-decoration: none;
 }
 
+.flex-align-center {
+  display: flex;
+  align-items: center;
+}
+
+.gap {
+  gap: 0.8rem;
+}
+
+.mb-1 {
+  margin-bottom: 1rem;
+}
+
 .btn {
   padding: 12px;
   border-radius: var(--border-radius);

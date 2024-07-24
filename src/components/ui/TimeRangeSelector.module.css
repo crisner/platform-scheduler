@@ -1,0 +1,8 @@
+.timeRangeContainer {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.startContainer, .endContainer {
+    display: flex;
+}
