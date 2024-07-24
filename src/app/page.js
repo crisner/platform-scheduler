@@ -160,6 +160,8 @@ export default function Dashboard() {
     setUpcomingTrains(upcoming);
   };
 
+  const refreshAlottedTrains = (platforms) => (updatedTrains) => allotTrains(updatedTrains, platforms);
+
   useEffect(() => {
     const renderTimer = setInterval(function updateCurrentTime() {
       if (firstRender.current) {
@@ -251,8 +253,8 @@ export default function Dashboard() {
                 trainDeparture={train.departureTime}
                 delayFn={delayTrain(
                   train,
-                  waitingTrains,
-                  setWaitingTrains,
+                  updatedTrains,
+                  refreshAlottedTrains(platforms),
                   "waiting"
                 )}
               />
@@ -271,8 +273,8 @@ export default function Dashboard() {
                 trainDeparture={train.departureTime}
                 delayFn={delayTrain(
                   train,
-                  upcomingTrains,
-                  setUpcomingTrains,
+                  updatedTrains,
+                  refreshAlottedTrains(platforms),
                   "upcoming"
                 )}
               />

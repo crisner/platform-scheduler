@@ -9,13 +9,11 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import { getParsedTrainData } from "@/lib/utils";
 
 const columnHelper = createColumnHelper();
 
 const TrainTable = ({ filter }) => {
-  const storedData = localStorage.getItem("trains");
-  const data = storedData ? JSON.parse(storedData) : [];
-
   const calculateDelay = (scheduled, actual) => {
     if (!scheduled || !actual) return 0;
     dayjs.extend(customParseFormat);
@@ -38,6 +36,7 @@ const TrainTable = ({ filter }) => {
   const [filteredData, setFilteredData] = useState([]);
   useEffect(() => {
     if (!filter) return;
+    const data = getParsedTrainData();
     const filtered = filterByArrivalTime(data, filter.start, filter.end);
     setFilteredData(filtered);
   }, [filter]);
