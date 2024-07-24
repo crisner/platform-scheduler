@@ -11,7 +11,9 @@ import { getParsedTrainData } from "@/lib/utils";
 
 export default function Dashboard() {
   const firstRender = useRef(true);
-  const NO_OF_PLATFORMS = 2;
+  const [simulationStart, setSimulationStart] = useState(false);
+  const [noOfPlatforms, setnoOfPlatforms] = useState(null);
+  // const NO_OF_PLATFORMS = 2;
   // const sortedTrains = trainData;
   const [currentTime, setCurrentTime] = useState(new Date());
   const [updatedTrains, setUpdatedTrains] = useState([]);
@@ -19,6 +21,20 @@ export default function Dashboard() {
   const [waitingTrains, setWaitingTrains] = useState([]);
   const [upcomingTrains, setUpcomingTrains] = useState([]);
   const [platforms, setPlatforms] = useState([]);
+
+  const startSimulation = () => {
+    const NO_OF_PLATFORMS = window.prompt("Enter number of platforms");
+    const number =
+      NO_OF_PLATFORMS < 2 || NO_OF_PLATFORMS > 20 ? 2 : NO_OF_PLATFORMS;
+    setnoOfPlatforms(number);
+    setSimulationStart(true);
+    window.alert("Simulation started");
+  };
+
+  const stopSimulation = () => {
+    setSimulationStart(false);
+    window.alert("Simulation stopped");
+  };
 
   const allotTrains = (sortedTrains, platforms) => {
     console.log("sortedTrains");
@@ -160,26 +176,31 @@ export default function Dashboard() {
     setUpcomingTrains(upcoming);
   };
 
-  const refreshAlottedTrains = (platforms) => (updatedTrains) => allotTrains(updatedTrains, platforms);
+  const refreshAlottedTrains = (platforms) => (updatedTrains) =>
+    allotTrains(updatedTrains, platforms);
 
   useEffect(() => {
-    const renderTimer = setInterval(function updateCurrentTime() {
-      if (firstRender.current) {
-        firstRender.current = false;
-      }
-      setCurrentTime(new Date());
-
-      // console.log("update time", new Date());
-    }, 15000);
-
+    let renderTimer;
+    if (simulationStart) {
+      renderTimer = setInterval(function updateCurrentTime() {
+        if (firstRender.current) {
+          firstRender.current = false;
+        }
+        setCurrentTime(new Date());
+      }, 15000);
+    }
+    if (!simulationStart && renderTimer) {
+      clearInterval(renderTimer);
+    }
     return () => {
       clearInterval(renderTimer);
     };
-  }, []);
+  }, [simulationStart]);
 
   useEffect(() => {
+    if (!noOfPlatforms) return;
     // Generate platform data from number of platforms
-    const platforms = Array.from({ length: NO_OF_PLATFORMS }, (_, i) => {
+    const platforms = Array.from({ length: noOfPlatforms }, (_, i) => {
       const number = i + 1;
       const platformID = number < 10 ? "0" + number : number.toString();
       return {
@@ -194,9 +215,8 @@ export default function Dashboard() {
     const trainData = getParsedTrainData();
 
     console.log("trainData", trainData);
-    // set
     allotTrains(trainData, platforms);
-  }, [NO_OF_PLATFORMS]);
+  }, [noOfPlatforms]);
 
   useEffect(() => {
     if (firstRender.current) return;
@@ -205,16 +225,30 @@ export default function Dashboard() {
 
   return (
     <main className={styles.main}>
-      <h1>Platform Viewer</h1>
+      <div className="flex-align-center gap">
+        <h1>Platform Viewer</h1>
+        <button
+          className="btn"
+          onClick={startSimulation}
+          disabled={simulationStart}
+        >
+          Simulation start
+        </button>
+        <button
+          className="btn"
+          disabled={!simulationStart}
+          onClick={stopSimulation}
+        >
+          Simulation stop
+        </button>
+      </div>
       <div className="info-header">
         <section className="details">
           <h2>Station 06</h2>
-          <div>No. of platforms: 8</div>
+          <div>No. of platforms: {noOfPlatforms}</div>
         </section>
         <div className="action-btns">
-          {/* <button className="btn btn-primary">Upload schedule</button> */}
           <Upload />
-          {/* <button className="btn btn-primary">Generate Report</button> */}
           <GenerateReport />
         </div>
       </div>

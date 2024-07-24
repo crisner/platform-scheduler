@@ -53,6 +53,7 @@ a {
   cursor: pointer;
   letter-spacing: 0.6px;
   width: fit-content;
+  background-color: var(--neutral);
 }
 
 .btn.btn-primary,
