@@ -23,9 +23,6 @@ const TrainItem = ({
           <RightArrow />
           <span>{trainDeparture}</span>
         </div>
-        {/* <button className="btn btn-danger" onClick={delayFn}>
-          Delay
-        </button> */}
         <DelayButton delayFn={delayFn} />
       </div>
     </div>

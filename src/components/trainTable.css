@@ -1,0 +1,16 @@
+.fixed-header-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .fixed-header {
+    position: sticky;
+    top: 0;
+    background-color: var(--neutral);
+    z-index: 1;
+  }
+  
+  .scrollable-body {
+    overflow-y: auto;
+    max-height: calc(100% - 80px);
+  }

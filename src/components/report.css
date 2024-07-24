@@ -67,6 +67,13 @@ input {
   box-shadow: 0 0 0 2px var(--neutral);
 }
 
+.table-container {
+ height: calc(100% - 80px);
+ overflow-x: auto;
+ overflow-y: auto;
+ border: 1px solid gray;
+}
+
 @keyframes overlayShow {
   from {
     opacity: 0;

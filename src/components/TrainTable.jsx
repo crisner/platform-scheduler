@@ -10,6 +10,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import { getParsedTrainData } from "@/lib/utils";
+import "./trainTable.css";
 
 const columnHelper = createColumnHelper();
 
@@ -83,8 +84,8 @@ const TrainTable = ({ filter }) => {
   });
 
   return (
-    <table style={{ borderCollapse: "collapse" }}>
-      <thead>
+    <table className="fixed-header-table">
+      <thead className="fixed-header">
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id} style={{ borderBottom: "1px solid gray" }}>
             {headerGroup.headers.map((header) => (
@@ -98,22 +99,19 @@ const TrainTable = ({ filter }) => {
           </tr>
         ))}
       </thead>
-      <tbody>
-        {table
-          .getRowModel()
-          .rows.filter((row) => row.original.id)
-          .map((row) => (
-            <tr key={row.id} style={{ borderBottom: "1px solid gray" }}>
-              {row.getVisibleCells().map((cell) => (
-                <td
-                  key={cell.id}
-                  style={{ border: "1px solid gray", padding: "8px" }}
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
+      <tbody className="scrollable-body">
+        {table.getRowModel().rows.map((row) => (
+          <tr key={row.id} style={{ borderBottom: "1px solid gray" }}>
+            {row.getVisibleCells().map((cell) => (
+              <td
+                key={cell.id}
+                style={{ border: "1px solid gray", padding: "8px" }}
+              >
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </td>
+            ))}
+          </tr>
+        ))}
       </tbody>
     </table>
   );

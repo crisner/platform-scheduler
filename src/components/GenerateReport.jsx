@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import "./report.css";
 import TrainTable from "./TrainTable";
 import TimeRangeSelector from "./ui/TimeRangeSelector";
+import "./report.css";
 
 const GenerateReport = () => {
   const [filter, setFilter] = useState({});
@@ -25,7 +25,9 @@ const GenerateReport = () => {
               Generate
             </button>
           </div>
+          <div className="table-container">
           <TrainTable filter={generate} />
+          </div>
           <Dialog.Close asChild>
             <button
               onClick={() => setGenerate(null)}

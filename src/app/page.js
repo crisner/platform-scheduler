@@ -13,8 +13,6 @@ export default function Dashboard() {
   const firstRender = useRef(true);
   const [simulationStart, setSimulationStart] = useState(false);
   const [noOfPlatforms, setnoOfPlatforms] = useState(null);
-  // const NO_OF_PLATFORMS = 2;
-  // const sortedTrains = trainData;
   const [currentTime, setCurrentTime] = useState(new Date());
   const [updatedTrains, setUpdatedTrains] = useState([]);
   const [currentTrains, setCurrentTrains] = useState([]);
@@ -37,14 +35,8 @@ export default function Dashboard() {
   };
 
   const allotTrains = (sortedTrains, platforms) => {
-    console.log("sortedTrains");
     const currentHours = currentTime.getHours().toString().padStart(2, "0");
     const currentMinutes = currentTime.getMinutes().toString().padStart(2, "0");
-    console.log(
-      "current time",
-      currentTime,
-      `${currentHours}:${currentMinutes}`
-    );
     // Note: Train categorization
     const current = [];
     const waiting = [];
@@ -162,12 +154,6 @@ export default function Dashboard() {
       return clonedTrain;
     });
 
-    // console.log("platforms", clonedPlatforms);
-    // console.log("current", current);
-    // console.log("updated", updated);
-    // console.log("waiting", waiting);
-    // console.log("upcoming", upcoming);
-    console.log("--------------------------------------");
     // Update state
     setPlatforms(clonedPlatforms);
     setUpdatedTrains(updated);
@@ -187,7 +173,7 @@ export default function Dashboard() {
           firstRender.current = false;
         }
         setCurrentTime(new Date());
-      }, 15000);
+      }, 5000);
     }
     if (!simulationStart && renderTimer) {
       clearInterval(renderTimer);
@@ -214,8 +200,7 @@ export default function Dashboard() {
     // Get train data from local storage
     const trainData = getParsedTrainData();
 
-    console.log("trainData", trainData);
-    allotTrains(trainData, platforms);
+    allotTrains(trainData || [], platforms);
   }, [noOfPlatforms]);
 
   useEffect(() => {

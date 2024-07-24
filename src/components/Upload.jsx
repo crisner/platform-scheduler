@@ -41,7 +41,30 @@ const Upload = () => {
       const uploadFile = Papa.parse(target.result, {
         header: true,
       });
-      const parsed = uploadFile?.data;
+      const fileData = uploadFile?.data;
+      const parsed = fileData.filter((data) => data['Train No']).map(data => {
+        const updateData = {};
+        const keys = Object.keys(data);
+        keys.forEach(key => {
+          switch (key) {
+            case "Train No":
+              updateData['id'] = data[key].trim();
+              break;
+            case "Arrival Time":
+              updateData['arrivalTime'] = data[key].trim();
+              break;
+            case "Departure Time":
+              updateData['departureTime'] = data[key].trim();
+              break;
+            case "Priority":
+              updateData['priority'] = data[key].trim();
+              break;
+            default:
+              break;
+          }
+        });
+        return updateData;
+      })
       localStorage.setItem("trains", JSON.stringify(parsed));
       closeDialog();
     };
@@ -74,6 +97,7 @@ const Upload = () => {
               display: "flex",
               marginTop: 25,
               justifyContent: "flex-end",
+              gap: '0.8rem'
             }}
           >
             <button onClick={closeDialog} className="btn" aria-label="Close">
