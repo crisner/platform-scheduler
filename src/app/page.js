@@ -7,6 +7,7 @@ import Upload from "@/components/Upload";
 import GenerateReport from "@/components/GenerateReport";
 import { trainData } from "./utils/testData";
 import { useEffect, useRef, useState } from "react";
+import { delayTrain } from "./utils/train";
 
 export default function Dashboard() {
   const firstRender = useRef(true);
@@ -154,20 +155,20 @@ export default function Dashboard() {
     setUpcomingTrains(upcoming);
   };
 
-  useEffect(() => {
-    const renderTimer = setInterval(function updateCurrentTime() {
-      if (firstRender.current) {
-        firstRender.current = false;
-      }
-      setCurrentTime(new Date());
+  // useEffect(() => {
+  //   const renderTimer = setInterval(function updateCurrentTime() {
+  //     if (firstRender.current) {
+  //       firstRender.current = false;
+  //     }
+  //     setCurrentTime(new Date());
 
-      console.log("update time", new Date());
-    }, 15000);
+  //     console.log("update time", new Date());
+  //   }, 15000);
 
-    return () => {
-      clearInterval(renderTimer);
-    };
-  }, []);
+  //   return () => {
+  //     clearInterval(renderTimer);
+  //   };
+  // }, []);
 
   useEffect(() => {
     // Generate platform data from number of platforms
@@ -187,10 +188,10 @@ export default function Dashboard() {
     allotTrains(trainData, platforms);
   }, [NO_OF_PLATFORMS]);
 
-  useEffect(() => {
-    if(firstRender.current) return;
-    allotTrains(updatedTrains, platforms);
-  }, [currentTime]);
+  // useEffect(() => {
+  //   if(firstRender.current) return;
+  //   allotTrains(updatedTrains, platforms);
+  // }, [currentTime]);
 
   return (
     <main className={styles.main}>
@@ -240,6 +241,7 @@ export default function Dashboard() {
                 trainID={train.id}
                 trainArrival={train.arrivalTime}
                 trainDeparture={train.departureTime}
+                delayFn={delayTrain(train, waitingTrains, setWaitingTrains, 'waiting')}
               />
             ))}
           </div>
@@ -254,6 +256,7 @@ export default function Dashboard() {
                 trainID={train.id}
                 trainArrival={train.arrivalTime}
                 trainDeparture={train.departureTime}
+                delayFn={delayTrain(train, upcomingTrains, setUpcomingTrains, 'upcoming')}
               />
             ))}
           </div>
