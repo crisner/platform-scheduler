@@ -2,6 +2,7 @@
 import React from "react";
 import TrainIcon from "../../public/assets/train.svg";
 import RightArrow from "../../public/assets/right-arrow.svg";
+import DelayButton from "./Delay";
 
 const TrainItem = ({
   status,
@@ -22,9 +23,10 @@ const TrainItem = ({
           <RightArrow />
           <span>{trainDeparture}</span>
         </div>
-        <button className="btn btn-danger" onClick={delayFn}>
+        {/* <button className="btn btn-danger" onClick={delayFn}>
           Delay
-        </button>
+        </button> */}
+        <DelayButton delayFn={delayFn} />
       </div>
     </div>
   );

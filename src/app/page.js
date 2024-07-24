@@ -1,26 +1,27 @@
 "use client";
-import "@/app/page.css";
-import styles from "./page.module.css";
 import PlatformItem from "@/components/PlatformItem";
 import TrainItem from "@/components/TrainItem";
 import Upload from "@/components/Upload";
 import GenerateReport from "@/components/GenerateReport";
-import { trainData } from "./utils/testData";
 import { useEffect, useRef, useState } from "react";
-import { delayTrain } from "./utils/train";
+import { delayTrain } from "../lib/train";
+import "@/app/page.css";
+import styles from "./page.module.css";
+import { getParsedTrainData } from "@/lib/utils";
 
 export default function Dashboard() {
   const firstRender = useRef(true);
   const NO_OF_PLATFORMS = 2;
-  const sortedTrains = trainData;
+  // const sortedTrains = trainData;
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [updatedTrains, setUpdatedTrains] = useState(sortedTrains);
+  const [updatedTrains, setUpdatedTrains] = useState([]);
   const [currentTrains, setCurrentTrains] = useState([]);
   const [waitingTrains, setWaitingTrains] = useState([]);
   const [upcomingTrains, setUpcomingTrains] = useState([]);
   const [platforms, setPlatforms] = useState([]);
 
   const allotTrains = (sortedTrains, platforms) => {
+    console.log("sortedTrains");
     const currentHours = currentTime.getHours().toString().padStart(2, "0");
     const currentMinutes = currentTime.getMinutes().toString().padStart(2, "0");
     console.log(
@@ -47,7 +48,7 @@ export default function Dashboard() {
         .split(":")
         .map(Number);
 
-        if (
+      if (
         departureHours == currentHours &&
         departureMinutes < currentMinutes &&
         clonedTrain.assignedPlatform
@@ -95,6 +96,7 @@ export default function Dashboard() {
             }
             // Update train information with platformID
             clonedTrain.assignedPlatform = clonedPlatform.id;
+            clonedTrain.status = null;
             return clonedPlatform;
           }
           if (clonedPlatform.train?.id == clonedTrain.id) {
@@ -124,12 +126,15 @@ export default function Dashboard() {
           return clonedPlatform;
         });
         if (noVacantPlatform) {
+          clonedTrain.status = "waiting";
           waiting.push(clonedTrain);
         }
         return clonedTrain;
       }
-
-      
+      // Note: Push delayed waiting trains correctly to waiting list
+      if (clonedTrain.status == "waiting" && !clonedTrain.assignedPlatform) {
+        waiting.push(clonedTrain);
+      }
 
       // Note: Handle upcoming trains
       if (
@@ -155,20 +160,20 @@ export default function Dashboard() {
     setUpcomingTrains(upcoming);
   };
 
-  // useEffect(() => {
-  //   const renderTimer = setInterval(function updateCurrentTime() {
-  //     if (firstRender.current) {
-  //       firstRender.current = false;
-  //     }
-  //     setCurrentTime(new Date());
+  useEffect(() => {
+    const renderTimer = setInterval(function updateCurrentTime() {
+      if (firstRender.current) {
+        firstRender.current = false;
+      }
+      setCurrentTime(new Date());
 
-  //     console.log("update time", new Date());
-  //   }, 15000);
+      // console.log("update time", new Date());
+    }, 15000);
 
-  //   return () => {
-  //     clearInterval(renderTimer);
-  //   };
-  // }, []);
+    return () => {
+      clearInterval(renderTimer);
+    };
+  }, []);
 
   useEffect(() => {
     // Generate platform data from number of platforms
@@ -183,15 +188,18 @@ export default function Dashboard() {
     });
     setPlatforms(platforms);
 
-    console.log("trainData", trainData);
+    // Get train data from local storage
+    const trainData = getParsedTrainData();
 
+    console.log("trainData", trainData);
+    // set
     allotTrains(trainData, platforms);
   }, [NO_OF_PLATFORMS]);
 
-  // useEffect(() => {
-  //   if(firstRender.current) return;
-  //   allotTrains(updatedTrains, platforms);
-  // }, [currentTime]);
+  useEffect(() => {
+    if (firstRender.current) return;
+    allotTrains(updatedTrains, platforms);
+  }, [currentTime]);
 
   return (
     <main className={styles.main}>
@@ -241,7 +249,12 @@ export default function Dashboard() {
                 trainID={train.id}
                 trainArrival={train.arrivalTime}
                 trainDeparture={train.departureTime}
-                delayFn={delayTrain(train, waitingTrains, setWaitingTrains, 'waiting')}
+                delayFn={delayTrain(
+                  train,
+                  waitingTrains,
+                  setWaitingTrains,
+                  "waiting"
+                )}
               />
             ))}
           </div>
@@ -256,7 +269,12 @@ export default function Dashboard() {
                 trainID={train.id}
                 trainArrival={train.arrivalTime}
                 trainDeparture={train.departureTime}
-                delayFn={delayTrain(train, upcomingTrains, setUpcomingTrains, 'upcoming')}
+                delayFn={delayTrain(
+                  train,
+                  upcomingTrains,
+                  setUpcomingTrains,
+                  "upcoming"
+                )}
               />
             ))}
           </div>

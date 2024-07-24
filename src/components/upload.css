@@ -75,7 +75,7 @@ input {
 }
 
 .Label {
-  font-size: 15px;
+  font-size: 14px;
   color: var(--text);
   width: 90px;
   text-align: right;

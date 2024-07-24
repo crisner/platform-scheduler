@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-popover": "^1.1.1",
     "@tanstack/react-table": "^8.19.3",
     "dayjs": "^1.11.12",
     "next": "14.2.5",

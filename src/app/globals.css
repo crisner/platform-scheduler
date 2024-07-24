@@ -52,6 +52,7 @@ a {
   border: transparent;
   cursor: pointer;
   letter-spacing: 0.6px;
+  width: fit-content;
 }
 
 .btn.btn-primary,
